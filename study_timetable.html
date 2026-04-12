@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MISSION 100: STUDY PLAN!! | 6 PM – 11 PM</title>
+  <meta name="description"
+    content="Interactive 100-day study timetable for DSA, CN, OS, Aptitude, and Project from 6 PM to 11 PM with checklist and progress tracking." />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      /* 🌸 Pookie Pink + Baby Blue Palette */
+      --bg-primary: #fdf0f5;
+      --bg-secondary: #fce8f2;
+      --bg-card: rgba(255, 255, 255, 0.75);
+      --bg-card-hover: rgba(255, 255, 255, 0.92);
+      --bg-glass: rgba(255, 255, 255, 0.6);
+
+      --pink-deep: #e0689a;
+      --pink-mid: #f09bb9;
+      --pink-soft: #f8c8d8;
+      --pink-blush: #fce8f2;
+      --pink-pale: #fff0f5;
+
+      --blue-deep: #5b9bd5;
+      --blue-mid: #85bce8;
+      --blue-soft: #bcd9f5;
+      --blue-sky: #deeefb;
+      --blue-pale: #eef6fd;
+
+      --accent-main: #e0689a;
+      --accent-second: #5b9bd5;
+      --accent-today: #c76bab;
+      --accent-done: #79caa4;
+
+      --text-primary: #4a2c4a;
+      --text-secondary: #7a5271;
+      --text-muted: #b08bac;
+      --border: #f0c8dc;
+      --border-light: #f5d8e8;
+      --border-blue: #c0d8f0;
+
+      --glow-pink: rgba(224, 104, 154, 0.25);
+      --glow-blue: rgba(91, 155, 213, 0.22);
+
+      /* Subject Colors — all remapped to pink/blue family */
+      --dsa: #e0689a;
+      --dsa-light: #f4a8c4;
+      --dsa-bg: rgba(224, 104, 154, 0.08);
+
+      --cn: #5b9bd5;
+      --cn-light: #93c4ec;
+      --cn-bg: rgba(91, 155, 213, 0.08);
+
+      --os: #9f7fd4;
+      --os-light: #c4aaec;
+      --os-bg: rgba(159, 127, 212, 0.08);
+
+      --apt: #e891b8;
+      --apt-light: #f5b8d4;
+      --apt-bg: rgba(232, 145, 184, 0.08);
+
+      --proj: #5ab3e0;
+      --proj-light: #87cdf0;
+      --proj-bg: rgba(90, 179, 224, 0.08);
+
+      --break: #d4b8e0;
+      --break-light: #e8d4f0;
+      --break-bg: rgba(212, 184, 224, 0.12);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 🌸 Dreamy background blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 10% 0%, rgba(240, 155, 185, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 90% 100%, rgba(133, 188, 232, 0.30) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255, 240, 245, 0.5) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Floating decorative bubbles */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle 120px at 85% 15%, rgba(188, 217, 245, 0.4) 0%, transparent 70%),
+        radial-gradient(circle 80px at 12% 75%, rgba(248, 200, 216, 0.45) 0%, transparent 70%),
+        radial-gradient(circle 60px at 65% 85%, rgba(240, 155, 185, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      text-align: center;
+      padding: 60px 20px 44px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(224, 104, 154, 0.15), rgba(91, 155, 213, 0.15));
+      border: 1.5px solid rgba(224, 104, 154, 0.35);
+      border-radius: 50px;
+      padding: 7px 20px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--pink-deep);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(224, 104, 154, 0.12);
+    }
+
+    .header h1 {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #c44f88 0%, #e0689a 35%, #85bce8 75%, #5b9bd5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.75;
+      font-weight: 500;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border-light);
+      border-radius: 20px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+      box-shadow: 0 4px 18px rgba(224, 104, 154, 0.07);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pink-mid);
+      box-shadow: 0 10px 32px var(--glow-pink);
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink-deep), var(--blue-deep));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
+    /* ── OVERALL PROGRESS ── */
+    .overall-progress-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(224, 104, 154, 0.25);
+      border-radius: 24px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 40px rgba(224, 104, 154, 0.1), 0 2px 8px rgba(91, 155, 213, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overall-progress-card::before {
+      content: '🌸';
+      position: absolute;
+      right: 24px;
+      top: 16px;
+      font-size: 2.5rem;
+      opacity: 0.15;
+    }
+
+    .overall-progress-card h2 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .progress-label {
+      width: 95px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .progress-bar-track {
+      flex: 1;
+      height: 9px;
+      background: var(--pink-blush);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-pct {
+      width: 40px;
+      text-align: right;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    #overall-pct-big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e0689a, #85bce8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .overall-nums {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .completed-tasks-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      padding-bottom: 7px;
+      font-weight: 600;
+    }
+
+    /* ── SUBJECT LEGEND ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid var(--border-light);
+      border-radius: 50px;
+      padding: 7px 15px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      box-shadow: 0 2px 8px rgba(224, 104, 154, 0.06);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* ── WEEK SELECTOR ── */
+    .week-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .week-nav h3 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+    }
+
+    .week-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .week-tab {
+      background: var(--bg-glass);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid var(--border-light);
+      border-radius: 10px;
+      padding: 5px 13px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .week-tab:hover {
+      border-color: var(--pink-mid);
+      color: var(--pink-deep);
+      background: rgba(224, 104, 154, 0.08);
+    }
+
+    .week-tab.active {
+      background: linear-gradient(135deg, rgba(224, 104, 154, 0.18), rgba(91, 155, 213, 0.12));
+      border-color: var(--pink-deep);
+      color: var(--pink-deep);
+      box-shadow: 0 2px 10px var(--glow-pink);
+    }
+
+    /* ── WEEK SUMMARY ── */
+    .week-summary-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border-blue);
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 20px var(--glow-blue);
+    }
+
+    .week-summary-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .week-summary-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .week-pct-badge {
+      background: linear-gradient(135deg, rgba(224, 104, 154, 0.12), rgba(91, 155, 213, 0.10));
+      border: 1.5px solid rgba(224, 104, 154, 0.28);
+      border-radius: 14px;
+      padding: 10px 18px;
+      text-align: center;
+      min-width: 88px;
+    }
+
+    .week-pct-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink-deep), var(--blue-deep));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .week-pct-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .week-progress-track {
+      flex: 1;
+      min-width: 160px;
+      height: 8px;
+      background: var(--pink-blush);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .week-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink-deep), var(--pink-mid), var(--blue-mid));
+      border-radius: 99px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── DAY CARDS ── */
+    .days-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .day-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--border-light);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 3px 14px rgba(224, 104, 154, 0.06);
+    }
+
+    .day-card:hover {
+      border-color: var(--pink-mid);
+      box-shadow: 0 6px 28px var(--glow-pink);
+      transform: translateY(-1px);
+    }
+
+    .day-card.completed {
+      border-color: rgba(121, 202, 164, 0.5);
+      box-shadow: 0 4px 20px rgba(121, 202, 164, 0.15);
+    }
+
+    .day-card.today {
+      border-color: var(--pink-deep);
+      box-shadow: 0 0 24px var(--glow-pink), 0 0 6px rgba(224, 104, 154, 0.2);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      background: transparent;
+      transition: background 0.2s;
+      border-radius: 22px;
+    }
+
+    .day-header:hover {
+      background: rgba(255, 240, 245, 0.5);
+    }
+
+    .day-number {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--pink-deep);
+      background: linear-gradient(135deg, rgba(224, 104, 154, 0.12), rgba(240, 155, 185, 0.08));
+      border: 1.5px solid rgba(224, 104, 154, 0.3);
+      border-radius: 10px;
+      padding: 4px 11px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(224, 104, 154, 0.1);
+    }
+
+    .day-number.today-badge {
+      background: linear-gradient(135deg, rgba(199, 107, 171, 0.15), rgba(224, 104, 154, 0.1));
+      border-color: var(--accent-today);
+      color: var(--accent-today);
+    }
+
+    .day-title {
+      flex: 1;
+      font-weight: 700;
+      font-size: 0.93rem;
+      color: var(--text-primary);
+    }
+
+    .day-mini-bar {
+      width: 76px;
+      height: 6px;
+      background: var(--pink-blush);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .day-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink-deep), var(--blue-mid));
+      border-radius: 99px;
+      transition: width 0.4s;
+    }
+
+    .day-pct-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      width: 36px;
+      text-align: right;
+    }
+
+    .day-chevron {
+      color: var(--pink-mid);
+      font-size: 0.85rem;
+      transition: transform 0.25s;
+    }
+
+    .day-card.open .day-chevron {
+      transform: rotate(180deg);
+    }
+
+    .day-body {
+      display: none;
+      padding: 0 18px 18px;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .day-card.open .day-body {
+      display: flex;
+    }
+
+    /* Session Row */
+    .session-row {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 13px;
+      border-radius: 14px;
+      border: 1.5px solid transparent;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      cursor: pointer;
+    }
+
+    .session-row:hover {
+      border-color: var(--border-light);
+      transform: translateX(2px);
+    }
+
+    .session-row.checked {
+      opacity: 0.55;
+    }
+
+    .session-row.DSA {
+      background: var(--dsa-bg);
+    }
+
+    .session-row.CN {
+      background: var(--cn-bg);
+    }
+
+    .session-row.OS {
+      background: var(--os-bg);
+    }
+
+    .session-row.Aptitude {
+      background: var(--apt-bg);
+    }
+
+    .session-row.Project {
+      background: var(--proj-bg);
+    }
+
+    .session-row.Break {
+      background: var(--break-bg);
+    }
+
+    .session-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 2px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      font-size: 11px;
+    }
+
+    .session-row:hover .session-checkbox {
+      transform: scale(1.1);
+    }
+
+    .session-row.DSA .session-checkbox {
+      border-color: var(--dsa);
+    }
+
+    .session-row.CN .session-checkbox {
+      border-color: var(--cn);
+    }
+
+    .session-row.OS .session-checkbox {
+      border-color: var(--os);
+    }
+
+    .session-row.Aptitude .session-checkbox {
+      border-color: var(--apt);
+    }
+
+    .session-row.Project .session-checkbox {
+      border-color: var(--proj);
+    }
+
+    .session-row.Break .session-checkbox {
+      border-color: var(--break);
+    }
+
+    .session-row.checked.DSA .session-checkbox {
+      background: var(--dsa);
+      border-color: var(--dsa);
+    }
+
+    .session-row.checked.CN .session-checkbox {
+      background: var(--cn);
+      border-color: var(--cn);
+    }
+
+    .session-row.checked.OS .session-checkbox {
+      background: var(--os);
+      border-color: var(--os);
+    }
+
+    .session-row.checked.Aptitude .session-checkbox {
+      background: var(--apt);
+      border-color: var(--apt);
+    }
+
+    .session-row.checked.Project .session-checkbox {
+      background: var(--proj);
+      border-color: var(--proj);
+    }
+
+    .session-row.checked.Break .session-checkbox {
+      background: var(--break);
+      border-color: var(--break);
+    }
+
+    .session-time {
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text-muted);
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .session-subject-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 11px;
+      border-radius: 50px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .DSA-tag {
+      background: rgba(224, 104, 154, 0.14);
+      color: #c94d85;
+    }
+
+    .CN-tag {
+      background: rgba(91, 155, 213, 0.14);
+      color: #3d80bd;
+    }
+
+    .OS-tag {
+      background: rgba(159, 127, 212, 0.14);
+      color: #7a55c0;
+    }
+
+    .Aptitude-tag {
+      background: rgba(232, 145, 184, 0.16);
+      color: #c4538f;
+    }
+
+    .Project-tag {
+      background: rgba(90, 179, 224, 0.14);
+      color: #3395c0;
+    }
+
+    .Break-tag {
+      background: rgba(212, 184, 224, 0.2);
+      color: #a878c8;
+    }
+
+    .session-desc {
+      flex: 1;
+      font-size: 0.81rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .session-row.checked .session-desc {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .session-dur {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      font-weight: 700;
+      background: var(--pink-blush);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    /* ── ACTION BAR ── */
+    .action-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.83rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-deep), var(--blue-deep));
+      color: #fff;
+      box-shadow: 0 4px 16px var(--glow-pink);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px var(--glow-pink);
+    }
+
+    .btn-outline {
+      background: var(--bg-glass);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--pink-mid);
+      color: var(--pink-deep);
+      background: rgba(255, 240, 245, 0.8);
+    }
+
+    .btn-danger {
+      background: rgba(224, 104, 154, 0.1);
+      border: 1.5px solid rgba(224, 104, 154, 0.3);
+      color: var(--pink-deep);
+    }
+
+    .btn-danger:hover {
+      background: rgba(224, 104, 154, 0.2);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 36px 0 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* Confetti animation */
+    @keyframes float-up {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-130px) rotate(380deg) scale(0.5);
+      }
+    }
+
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float-up 1.4s ease-out forwards;
+      z-index: 9999;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--pink-soft);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--pink-mid);
+    }
+
+    /* Sparkle decoration on overall card */
+    @keyframes shimmer {
+
+      0%,
+      100% {
+        opacity: 0.12;
+      }
+
+      50% {
+        opacity: 0.22;
+      }
+    }
+
+    /* ────────────────────────────────────────────
+       🌙 DARK THEME — blacks, greys, whites
+    ──────────────────────────────────────────── */
+    [data-theme="dark"] {
+      --bg-primary: #0d0d0d;
+      --bg-secondary: #141414;
+      --bg-card: rgba(28, 28, 28, 0.85);
+      --bg-card-hover: rgba(36, 36, 36, 0.95);
+      --bg-glass: rgba(22, 22, 22, 0.75);
+
+      --pink-deep: #c8c8c8;
+      --pink-mid: #a0a0a0;
+      --pink-soft: #505050;
+      --pink-blush: #1c1c1c;
+      --pink-pale: #111111;
+
+      --blue-deep: #e8e8e8;
+      --blue-mid: #b0b0b0;
+      --blue-soft: #404040;
+      --blue-sky: #242424;
+      --blue-pale: #181818;
+
+      --accent-main: #d0d0d0;
+      --accent-second: #909090;
+      --accent-today: #ffffff;
+      --accent-done: #6abf8a;
+
+      --text-primary: #f0f0f0;
+      --text-secondary: #b8b8b8;
+      --text-muted: #686868;
+      --border: #2a2a2a;
+      --border-light: #2e2e2e;
+      --border-blue: #333333;
+
+      --glow-pink: rgba(200, 200, 200, 0.12);
+      --glow-blue: rgba(180, 180, 180, 0.10);
+
+      /* Subjects — greyscale tints */
+      --dsa: #d4d4d4;
+      --dsa-light: #ececec;
+      --dsa-bg: rgba(212, 212, 212, 0.07);
+
+      --cn: #a8a8a8;
+      --cn-light: #cccccc;
+      --cn-bg: rgba(168, 168, 168, 0.07);
+
+      --os: #c0c0c0;
+      --os-light: #e0e0e0;
+      --os-bg: rgba(192, 192, 192, 0.07);
+
+      --apt: #b8b8b8;
+      --apt-light: #d8d8d8;
+      --apt-bg: rgba(184, 184, 184, 0.07);
+
+      --proj: #909090;
+      --proj-light: #b8b8b8;
+      --proj-bg: rgba(144, 144, 144, 0.07);
+
+      --break: #383838;
+      --break-light: #606060;
+      --break-bg: rgba(56, 56, 56, 0.18);
+    }
+
+    /* Dark body blobs — subtle charcoal glows */
+    [data-theme="dark"] body::before {
+      background:
+        radial-gradient(ellipse 70% 55% at 10% 0%, rgba(60, 60, 60, 0.4) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 90% 100%, rgba(40, 40, 40, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(20, 20, 20, 0.5) 0%, transparent 70%);
+    }
+
+    [data-theme="dark"] body::after {
+      background-image:
+        radial-gradient(circle 120px at 85% 15%, rgba(50, 50, 50, 0.3) 0%, transparent 70%),
+        radial-gradient(circle 80px at 12% 75%, rgba(45, 45, 45, 0.35) 0%, transparent 70%),
+        radial-gradient(circle 60px at 65% 85%, rgba(35, 35, 35, 0.25) 0%, transparent 70%);
+    }
+
+    /* Dark scrollbar */
+    [data-theme="dark"] ::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    [data-theme="dark"] ::-webkit-scrollbar-thumb {
+      background: #3a3a3a;
+    }
+
+    [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* Dark stat gradient text */
+    [data-theme="dark"] .stat-value {
+      background: linear-gradient(135deg, #e0e0e0, #909090);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Dark overall big pct */
+    [data-theme="dark"] #overall-pct-big {
+      background: linear-gradient(135deg, #e8e8e8, #909090);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Dark overall progress bar track */
+    [data-theme="dark"] .progress-bar-track {
+      background: #1c1c1c;
+    }
+
+    /* Dark week pct num */
+    [data-theme="dark"] .week-pct-num {
+      background: linear-gradient(135deg, #e0e0e0, #888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Smooth theme transition */
+    body,
+    .stat-card,
+    .overall-progress-card,
+    .legend-item,
+    .week-summary-card,
+    .week-tab,
+    .day-card,
+    .session-row,
+    .btn,
+    .week-pct-badge,
+    .day-number {
+      transition-property: background, border-color, color, box-shadow;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
+    }
+
+    /* ── THEME TOGGLE BUTTON ── */
+    #theme-toggle {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(224, 104, 154, 0.35);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #7a5271;
+      box-shadow: 0 4px 18px rgba(224, 104, 154, 0.18);
+      transition: all 0.3s;
+      letter-spacing: 0.3px;
+    }
+
+    #theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 24px rgba(224, 104, 154, 0.28);
+    }
+
+    [data-theme="dark"] #theme-toggle {
+      border-color: rgba(200, 200, 200, 0.2);
+      background: rgba(28, 28, 28, 0.85);
+      color: #c8c8c8;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="dark"] #theme-toggle:hover {
+      box-shadow: 0 7px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    .toggle-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* Dark session tags override */
+    [data-theme="dark"] .DSA-tag {
+      background: rgba(212, 212, 212, 0.12);
+      color: #ddd;
+    }
+
+    [data-theme="dark"] .CN-tag {
+      background: rgba(168, 168, 168, 0.12);
+      color: #bbb;
+    }
+
+    [data-theme="dark"] .OS-tag {
+      background: rgba(192, 192, 192, 0.12);
+      color: #ccc;
+    }
+
+    [data-theme="dark"] .Aptitude-tag {
+      background: rgba(184, 184, 184, 0.12);
+      color: #c8c8c8;
+    }
+
+    [data-theme="dark"] .Project-tag {
+      background: rgba(144, 144, 144, 0.12);
+      color: #aaa;
+    }
+
+    [data-theme="dark"] .Break-tag {
+      background: rgba(56, 56, 56, 0.25);
+      color: #666;
+    }
+
+    /* Dark overall bar inline override via JS */
+    [data-theme="dark"] #overall-bar {
+      background: linear-gradient(90deg, #888, #bbb, #e0e0e0) !important;
+    }
+
+    /* Dark header gradient */
+    [data-theme="dark"] .header h1 {
+      background: linear-gradient(135deg, #f0f0f0 0%, #b0b0b0 50%, #707070 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Dark header badge */
+    [data-theme="dark"] .header-badge {
+      background: rgba(200, 200, 200, 0.08);
+      border-color: rgba(200, 200, 200, 0.2);
+      color: #c0c0c0;
+    }
+
+    /* Dark day-mini-fill */
+    [data-theme="dark"] .day-mini-fill {
+      background: linear-gradient(90deg, #c0c0c0, #606060);
+    }
+
+    /* Dark week progress fill */
+    [data-theme="dark"] .week-progress-fill {
+      background: linear-gradient(90deg, #e0e0e0, #888, #555);
+    }
+
+    /* Dark day number badge */
+    [data-theme="dark"] .day-number {
+      background: rgba(200, 200, 200, 0.08);
+      border-color: rgba(200, 200, 200, 0.18);
+      color: #d0d0d0;
+    }
+
+    [data-theme="dark"] .day-number.today-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.35);
+      color: #fff;
+    }
+
+    /* Dark week-pct-badge */
+    [data-theme="dark"] .week-pct-badge {
+      background: rgba(200, 200, 200, 0.07);
+      border-color: rgba(200, 200, 200, 0.15);
+    }
+
+    /* Dark week-tab active */
+    [data-theme="dark"] .week-tab.active {
+      background: rgba(200, 200, 200, 0.12);
+      border-color: #888;
+      color: #e0e0e0;
+      box-shadow: none;
+    }
+
+    [data-theme="dark"] .week-tab:hover {
+      border-color: #888;
+      color: #e0e0e0;
+      background: rgba(200, 200, 200, 0.07);
+    }
+
+    /* Dark btn-outline */
+    [data-theme="dark"] .btn-outline {
+      border-color: #333;
+      color: #909090;
+      background: rgba(22, 22, 22, 0.75);
+    }
+
+    [data-theme="dark"] .btn-outline:hover {
+      border-color: #888;
+      color: #e0e0e0;
+      background: rgba(50, 50, 50, 0.5);
+    }
+
+    /* Dark btn-danger */
+    [data-theme="dark"] .btn-danger {
+      background: rgba(120, 120, 120, 0.1);
+      border-color: rgba(120, 120, 120, 0.25);
+      color: #b0b0b0;
+    }
+
+    [data-theme="dark"] .btn-danger:hover {
+      background: rgba(120, 120, 120, 0.2);
+    }
+
+    [data-theme="dark"] .btn-primary {
+      background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Dark legend items */
+    [data-theme="dark"] .legend-item {
+      border-color: #2e2e2e;
+      color: #808080;
+    }
+
+    /* Dark overall progress card decoration */
+    [data-theme="dark"] .overall-progress-card::before {
+      content: '🌙';
+    }
+
+    @media (max-width: 600px) {
+      .session-time {
+        width: 70px;
+        font-size: 0.68rem;
+      }
+
+      .session-desc {
+        font-size: 0.74rem;
+      }
+
+      .overall-progress-card {
+        padding: 18px 16px;
+      }
+
+      .day-header {
+        padding: 13px 14px;
+        gap: 10px;
+      }
+
+      #theme-toggle {
+        top: 12px;
+        right: 12px;
+        padding: 7px 12px;
+        font-size: 0.73rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🌙 THEME TOGGLE -->
+  <button id="theme-toggle" onclick="toggleTheme()" title="Switch theme">
+    <span class="toggle-icon" id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark Mode</span>
+  </button>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-badge">🎯 Mission 100</div>
+      <h1>MISSION 100: STUDY PLAN!!</h1>
+      <p>6:00 PM – 11:00 PM · DSA · CN · OS · Aptitude · Project</p>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-days">0</div>
+        <div class="stat-label">Days Done</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-sessions">0</div>
+        <div class="stat-label">Sessions ✓</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-hours">0h</div>
+        <div class="stat-label">Study Hours</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-streak">0</div>
+        <div class="stat-label">Current Streak</div>
+      </div>
+    </div>
+
+    <!-- OVERALL PROGRESS -->
+    <div class="overall-progress-card">
+      <h2>🎯 Overall Progress</h2>
+      <div class="overall-nums">
+        <div id="overall-pct-big">0%</div>
+        <div class="completed-tasks-label" id="overall-fraction">0 / 500 sessions completed</div>
+      </div>
+      <div class="progress-bar-track"
+        style="height:14px;border-radius:99px;overflow:hidden;background:var(--pink-blush);">
+        <div id="overall-bar" class="progress-bar-fill"
+          style="width:0%;background:linear-gradient(90deg,#e0689a,#f09bb9,#85bce8,#5b9bd5);height:100%;border-radius:99px;transition:width 0.6s;">
+        </div>
+      </div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="progress-row">
+          <span class="progress-label" style="color:#e0689a">🌸 DSA</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="bar-DSA" style="width:0%;background:var(--dsa);"></div>
+          </div>
+          <span class="progress-pct" id="pct-DSA">0%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label" style="color:#5b9bd5">💙 CN</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="bar-CN" style="width:0%;background:var(--cn);"></div>
+          </div>
+          <span class="progress-pct" id="pct-CN">0%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label" style="color:#9f7fd4">✨ OS</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="bar-OS" style="width:0%;background:var(--os);"></div>
+          </div>
+          <span class="progress-pct" id="pct-OS">0%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label" style="color:#e891b8">🎀 Aptitude</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="bar-Aptitude" style="width:0%;background:var(--apt);"></div>
+          </div>
+          <span class="progress-pct" id="pct-Aptitude">0%</span>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label" style="color:#5ab3e0">🦋 Project</span>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="bar-Project" style="width:0%;background:var(--proj);"></div>
+          </div>
+          <span class="progress-pct" id="pct-Project">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--dsa)"></div>DSA (Algorithms & DS)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--cn)"></div>CN (Computer Networks)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--os)"></div>OS (Operating Systems)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--apt)"></div>Aptitude (Quant & Logical)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--proj)"></div>Project (Dev & Build)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--break)"></div>Break
+      </div>
+    </div>
+
+    <!-- ACTION BAR -->
+    <div class="action-bar">
+      <button class="btn btn-outline" onclick="expandAll()">⬇ Expand All Days</button>
+      <button class="btn btn-outline" onclick="collapseAll()">⬆ Collapse All</button>
+      <button class="btn btn-outline" onclick="jumpToToday()">📍 Jump to Today</button>
+      <button class="btn btn-danger" onclick="resetAll()">🗑 Reset All</button>
+    </div>
+
+    <!-- WEEK TABS -->
+    <div class="week-nav">
+      <h3>📅 Week</h3>
+      <div class="week-tabs" id="weekTabs"></div>
+    </div>
+
+    <!-- WEEK SUMMARY -->
+    <div class="week-summary-card" id="weekSummaryCard">
+      <div>
+        <div class="week-summary-title" id="weekSummaryTitle">Week 1 (Days 1–7)</div>
+        <div class="week-summary-sub" id="weekSummaryDays">Focus: Build your momentum</div>
+      </div>
+      <div class="week-pct-badge">
+        <div class="week-pct-num" id="weekPct">0%</div>
+        <div class="week-pct-label">Done</div>
+      </div>
+      <div style="flex:1;min-width:160px;">
+        <div class="week-progress-track">
+          <div class="week-progress-fill" id="weekBar" style="width:0%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:0.7rem;color:var(--text-muted)">
+          <span id="weekDone">0 sessions done</span>
+          <span id="weekTotal">0 total</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAYS GRID -->
+    <div class="days-grid" id="daysGrid"></div>
+
+    <div class="footer">Built with ❤️ for your 100-day journey · Keep going, Day <span id="footerDay">1</span> at a
+      time!</div>
+  </div>
+
+  <script>
+    // ──────────────────────────────────────────────
+    // DATA
+    // ──────────────────────────────────────────────
+
+    const SUBJECTS = ['DSA', 'CN', 'OS', 'Aptitude', 'Project'];
+
+    // 5 rotating schedule patterns to create variety
+    const PATTERNS = [
+      // Pattern 0: DSA → CN → OS → Apt → Proj
+      [
+        { sub: 'DSA', start: '6:00 PM', end: '6:55 PM', dur: 55 },
+        { sub: 'Break', start: '6:55 PM', end: '7:05 PM', dur: 10 },
+        { sub: 'CN', start: '7:05 PM', end: '7:55 PM', dur: 50 },
+        { sub: 'Break', start: '7:55 PM', end: '8:05 PM', dur: 10 },
+        { sub: 'OS', start: '8:05 PM', end: '8:55 PM', dur: 50 },
+        { sub: 'Break', start: '8:55 PM', end: '9:05 PM', dur: 10 },
+        { sub: 'Aptitude', start: '9:05 PM', end: '9:55 PM', dur: 50 },
+        { sub: 'Break', start: '9:55 PM', end: '10:05 PM', dur: 10 },
+        { sub: 'Project', start: '10:05 PM', end: '11:00 PM', dur: 55 },
+      ],
+      // Pattern 1: CN → DSA → Apt → OS → Proj
+      [
+        { sub: 'CN', start: '6:00 PM', end: '6:50 PM', dur: 50 },
+        { sub: 'Break', start: '6:50 PM', end: '7:00 PM', dur: 10 },
+        { sub: 'DSA', start: '7:00 PM', end: '7:55 PM', dur: 55 },
+        { sub: 'Break', start: '7:55 PM', end: '8:05 PM', dur: 10 },
+        { sub: 'Aptitude', start: '8:05 PM', end: '8:55 PM', dur: 50 },
+        { sub: 'Break', start: '8:55 PM', end: '9:05 PM', dur: 10 },
+        { sub: 'OS', start: '9:05 PM', end: '9:55 PM', dur: 50 },
+        { sub: 'Break', start: '9:55 PM', end: '10:05 PM', dur: 10 },
+        { sub: 'Project', start: '10:05 PM', end: '11:00 PM', dur: 55 },
+      ],
+      // Pattern 2: OS → Apt → DSA → Proj → CN
+      [
+        { sub: 'OS', start: '6:00 PM', end: '6:50 PM', dur: 50 },
+        { sub: 'Break', start: '6:50 PM', end: '7:00 PM', dur: 10 },
+        { sub: 'Aptitude', start: '7:00 PM', end: '7:50 PM', dur: 50 },
+        { sub: 'Break', start: '7:50 PM', end: '8:00 PM', dur: 10 },
+        { sub: 'DSA', start: '8:00 PM', end: '8:55 PM', dur: 55 },
+        { sub: 'Break', start: '8:55 PM', end: '9:05 PM', dur: 10 },
+        { sub: 'Project', start: '9:05 PM', end: '10:00 PM', dur: 55 },
+        { sub: 'Break', start: '10:00 PM', end: '10:07 PM', dur: 7 },
+        { sub: 'CN', start: '10:07 PM', end: '11:00 PM', dur: 53 },
+      ],
+      // Pattern 3: Apt → Proj → CN → DSA → OS
+      [
+        { sub: 'Aptitude', start: '6:00 PM', end: '6:50 PM', dur: 50 },
+        { sub: 'Break', start: '6:50 PM', end: '7:00 PM', dur: 10 },
+        { sub: 'Project', start: '7:00 PM', end: '7:55 PM', dur: 55 },
+        { sub: 'Break', start: '7:55 PM', end: '8:05 PM', dur: 10 },
+        { sub: 'CN', start: '8:05 PM', end: '8:55 PM', dur: 50 },
+        { sub: 'Break', start: '8:55 PM', end: '9:05 PM', dur: 10 },
+        { sub: 'DSA', start: '9:05 PM', end: '9:55 PM', dur: 50 },
+        { sub: 'Break', start: '9:55 PM', end: '10:05 PM', dur: 10 },
+        { sub: 'OS', start: '10:05 PM', end: '11:00 PM', dur: 55 },
+      ],
+      // Pattern 4: Proj → OS → CN → Apt → DSA
+      [
+        { sub: 'Project', start: '6:00 PM', end: '6:55 PM', dur: 55 },
+        { sub: 'Break', start: '6:55 PM', end: '7:05 PM', dur: 10 },
+        { sub: 'OS', start: '7:05 PM', end: '7:55 PM', dur: 50 },
+        { sub: 'Break', start: '7:55 PM', end: '8:03 PM', dur: 8 },
+        { sub: 'CN', start: '8:03 PM', end: '8:53 PM', dur: 50 },
+        { sub: 'Break', start: '8:53 PM', end: '9:03 PM', dur: 10 },
+        { sub: 'Aptitude', start: '9:03 PM', end: '9:55 PM', dur: 52 },
+        { sub: 'Break', start: '9:55 PM', end: '10:05 PM', dur: 10 },
+        { sub: 'DSA', start: '10:05 PM', end: '11:00 PM', dur: 55 },
+      ],
+    ];
+
+    const SESSION_TOPICS = {
+      DSA: ['Arrays & Strings', 'Linked Lists', 'Stacks & Queues', 'Recursion', 'Sorting Algorithms', 'Binary Search', 'Trees & BST', 'Graphs – BFS/DFS', 'Dynamic Programming', 'Greedy Algorithms', 'Backtracking', 'Heaps & Priority Queue', 'Trie & HashMap', 'Sliding Window', 'Two Pointers', 'Divide & Conquer', 'Bit Manipulation', 'Advanced DP', 'Graph Algorithms', 'Mock Problems'],
+      CN: ['OSI Model & TCP/IP', 'Protocols: HTTP/HTTPS/FTP', 'DNS & DHCP', 'IP Addressing & Subnetting', 'TCP vs UDP', 'Network Topology', 'Switching & Routing', 'Firewalls & NAT', 'Socket Programming', 'SSL/TLS & Security', 'Wireless Networks', 'CDN & Load Balancing', 'Congestion Control', 'Network Layers Review', 'Cloud Networking', 'HTTP/2 & HTTP/3', 'WebSockets', 'REST APIs', 'VPN & Proxy', 'Mock Questions'],
+      OS: ['Processes & Threads', 'CPU Scheduling', 'Process Synchronization', 'Deadlocks', 'Memory Management', 'Paging & Segmentation', 'Virtual Memory', 'File Systems', 'I/O Management', 'Disk Scheduling', 'System Calls', 'InterProcess Communication', 'POSIX & UNIX Basics', 'Linux Commands', 'Shell Scripting', 'OS Security', 'Virtualization', 'Containers & Docker', 'Kernel Architecture', 'Mock Questions'],
+      Aptitude: ['Number Systems', 'LCM & HCF', 'Percentages', 'Profit & Loss', 'Ratios & Proportions', 'Time & Work', 'Speed, Distance & Time', 'Mixtures & Alligation', 'Permutations & Combinations', 'Probability', 'Blood Relations', 'Syllogisms', 'Data Interpretation', 'Logical Reasoning', 'Seating Arrangement', 'Data Sufficiency', 'Verbal – Analogies', 'RC Passage', 'CAT-style Problems', 'Full Mock Test'],
+      Project: ['Project Ideation', 'Tech Stack Setup', 'Database Design', 'Backend API – CRUD', 'Authentication Module', 'Frontend UI Design', 'React Components', 'State Management', 'API Integration', 'User Auth Flow', 'Dashboard UI', 'Data Visualization', 'File Upload Module', 'Notifications System', 'Performance Optimization', 'Testing – Unit Tests', 'Deployment – CI/CD', 'Documentation', 'Bug Fixes & Refinement', 'Final Demo & Review'],
+    };
+
+    // LSKey
+    const LS_KEY = 'studyTimetable_v3';
+
+    // Generate 100 days
+    const START_DATE = new Date(2026, 3, 12); // Apr 12 2026
+
+    function generateDays() {
+      const days = [];
+      for (let d = 1; d <= 100; d++) {
+        const pattern = PATTERNS[(d - 1) % PATTERNS.length];
+        const topicIdx = (d - 1) % 20;
+        const sessions = pattern.map(s => ({
+          sub: s.sub,
+          start: s.start,
+          end: s.end,
+          dur: s.dur,
+          topic: s.sub === 'Break' ? 'Short Break — stretch & hydrate 💧' : SESSION_TOPICS[s.sub][topicIdx],
+          checked: false,
+        }));
+        const date = new Date(START_DATE);
+        date.setDate(date.getDate() + d - 1);
+        days.push({ day: d, date, sessions });
+      }
+      return days;
+    }
+
+    let days = generateDays();
+
+    // ──────────────────────────────────────────────
+    // PERSISTENCE
+    // ──────────────────────────────────────────────
+    function save() {
+      const data = days.map(d => d.sessions.map(s => s.checked));
+      localStorage.setItem(LS_KEY, JSON.stringify(data));
+    }
+
+    function load() {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return;
+      try {
+        const data = JSON.parse(raw);
+        data.forEach((daySessions, di) => {
+          if (!days[di]) return;
+          daySessions.forEach((checked, si) => {
+            if (days[di].sessions[si]) days[di].sessions[si].checked = !!checked;
+          });
+        });
+      } catch (e) { }
+    }
+
+    // ──────────────────────────────────────────────
+    // HELPERS
+    // ──────────────────────────────────────────────
+    function fmtDate(date) {
+      return date.toLocaleDateString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function getWeekLabel(weekIdx) {
+      const d1 = weekIdx * 7 + 1;
+      const d2 = Math.min(d1 + 6, 100);
+      return `Week ${weekIdx + 1} (Days ${d1}–${d2})`;
+    }
+
+    const WEEK_THEMES = [
+      'Build your momentum 🚀', 'Strengthen the foundation 🏗️', 'Pick up the pace ⚡', 'Go deeper into concepts 🧠',
+      'Midway milestone! 🎯', 'Stay consistent 💪', 'Enter the groove 🎵', 'Review & reinforce 📝',
+      'Challenge yourself 🔥', 'Power through 🏋️', 'Final stretch ahead 🏁', 'Revise key topics 📚',
+      'Mock & practice 🖊️', 'Finish strong 💥', 'Last lap — sprint! 🏃',
+    ];
+
+    function studySessions(daySessions) {
+      return daySessions.filter(s => s.sub !== 'Break');
+    }
+
+    function getStats() {
+      let totalSess = 0, checkedSess = 0, hours = 0;
+      const subTotal = {}, subChecked = {};
+      SUBJECTS.forEach(s => { subTotal[s] = 0; subChecked[s] = 0; });
+
+      let daysCompleted = 0;
+      let streak = 0;
+      let streakRunning = true;
+
+      for (let di = 0; di < days.length; di++) {
+        const d = days[di];
+        const ss = studySessions(d.sessions);
+        totalSess += ss.length;
+        const done = ss.filter(s => s.checked).length;
+        checkedSess += done;
+        if (done === ss.length && ss.length > 0) daysCompleted++;
+
+        ss.forEach(s => {
+          subTotal[s.sub] = (subTotal[s.sub] || 0) + 1;
+          if (s.checked) {
+            subChecked[s.sub] = (subChecked[s.sub] || 0) + 1;
+            hours += s.dur / 60;
+          }
+        });
+      }
+
+      // Streak: count from day 1 forward while each day is fully done
+      for (let di = 0; di < days.length; di++) {
+        const ss = studySessions(days[di].sessions);
+        if (ss.length > 0 && ss.every(s => s.checked)) {
+          streak++;
+        } else {
+          break;
+        }
+      }
+
+      return { totalSess, checkedSess, hours, daysCompleted, streak, subTotal, subChecked };
+    }
+
+    function getWeekStats(weekIdx) {
+      const d1 = weekIdx * 7;
+      const d2 = Math.min(d1 + 7, 100);
+      let total = 0, done = 0;
+      for (let di = d1; di < d2; di++) {
+        const ss = studySessions(days[di].sessions);
+        total += ss.length;
+        done += ss.filter(s => s.checked).length;
+      }
+      return { total, done };
+    }
+
+    // ──────────────────────────────────────────────
+    // RENDER
+    // ──────────────────────────────────────────────
+    let activeWeek = 0;
+
+    function renderWeekTabs() {
+      const container = document.getElementById('weekTabs');
+      container.innerHTML = '';
+      for (let w = 0; w < 15; w++) {
+        const tab = document.createElement('button');
+        tab.className = 'week-tab' + (w === activeWeek ? ' active' : '');
+        tab.textContent = `W${w + 1}`;
+        tab.onclick = () => { activeWeek = w; renderWeekTabs(); renderWeekSummary(); renderDays(); };
+        container.appendChild(tab);
+      }
+    }
+
+    function renderWeekSummary() {
+      const ws = getWeekStats(activeWeek);
+      const pct = ws.total > 0 ? Math.round(ws.done / ws.total * 100) : 0;
+      document.getElementById('weekSummaryTitle').textContent = getWeekLabel(activeWeek);
+      document.getElementById('weekSummaryDays').textContent = WEEK_THEMES[activeWeek] || 'Keep pushing!';
+      document.getElementById('weekPct').textContent = pct + '%';
+      document.getElementById('weekBar').style.width = pct + '%';
+      document.getElementById('weekDone').textContent = ws.done + ' sessions done';
+      document.getElementById('weekTotal').textContent = ws.total + ' total';
+    }
+
+    function renderStats() {
+      const s = getStats();
+      const pct = s.totalSess > 0 ? Math.round(s.checkedSess / s.totalSess * 100) : 0;
+      document.getElementById('stat-days').textContent = s.daysCompleted;
+      document.getElementById('stat-sessions').textContent = s.checkedSess;
+      document.getElementById('stat-hours').textContent = Math.round(s.hours) + 'h';
+      document.getElementById('stat-streak').textContent = s.streak;
+      document.getElementById('overall-pct-big').textContent = pct + '%';
+      document.getElementById('overall-fraction').textContent = s.checkedSess + ' / ' + s.totalSess + ' sessions completed';
+      document.getElementById('overall-bar').style.width = pct + '%';
+      document.getElementById('footerDay').textContent = s.daysCompleted + 1;
+
+      SUBJECTS.forEach(sub => {
+        const spct = s.subTotal[sub] > 0 ? Math.round((s.subChecked[sub] || 0) / s.subTotal[sub] * 100) : 0;
+        document.getElementById('bar-' + sub).style.width = spct + '%';
+        document.getElementById('pct-' + sub).textContent = spct + '%';
+      });
+    }
+
+    const openDays = new Set();
+
+    function renderDays() {
+      const container = document.getElementById('daysGrid');
+      container.innerHTML = '';
+      const d1 = activeWeek * 7;
+      const d2 = Math.min(d1 + 7, 100);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let di = d1; di < d2; di++) {
+        const day = days[di];
+        const ss = studySessions(day.sessions);
+        const done = ss.filter(s => s.checked).length;
+        const pct = ss.length > 0 ? Math.round(done / ss.length * 100) : 0;
+        const isComplete = pct === 100 && ss.length > 0;
+        const dDate = new Date(day.date); dDate.setHours(0, 0, 0, 0);
+        const isToday = dDate.getTime() === today.getTime();
+        const isOpen = openDays.has(di);
+
+        const card = document.createElement('div');
+        card.className = 'day-card' + (isComplete ? ' completed' : '') + (isToday ? ' today' : '') + (isOpen ? ' open' : '');
+        card.id = 'day-card-' + di;
+
+        // Header
+        const hdr = document.createElement('div');
+        hdr.className = 'day-header';
+        hdr.innerHTML = `
+      <div class="day-number ${isToday ? 'today-badge' : ''}">Day ${day.day}${isToday ? ' 🔥' : ''}</div>
+      <div>
+        <div class="day-title">${fmtDate(day.date)}</div>
+      </div>
+      <div class="day-mini-bar"><div class="day-mini-fill" style="width:${pct}%"></div></div>
+      <div class="day-pct-label">${pct}%</div>
+      <div class="day-chevron">▼</div>
+    `;
+        hdr.onclick = () => {
+          if (openDays.has(di)) openDays.delete(di);
+          else openDays.add(di);
+          renderDays();
+        };
+        card.appendChild(hdr);
+
+        // Body
+        const body = document.createElement('div');
+        body.className = 'day-body';
+
+        day.sessions.forEach((sess, si) => {
+          const row = document.createElement('div');
+          row.className = 'session-row ' + sess.sub + (sess.checked ? ' checked' : '');
+          row.innerHTML = `
+        <div class="session-checkbox">${sess.checked ? '✓' : ''}</div>
+        <div class="session-time">${sess.start} – ${sess.end}</div>
+        <div class="session-subject-tag ${sess.sub}-tag">${sess.sub === 'Break' ? '☕ Break' : sess.sub}</div>
+        <div class="session-desc">${sess.topic}</div>
+        <div class="session-dur">${sess.dur}m</div>
+      `;
+          if (sess.sub !== 'Break') {
+            row.onclick = () => {
+              sess.checked = !sess.checked;
+              save();
+              if (sess.checked) spawnConfetti(row);
+              renderStats();
+              renderWeekSummary();
+              renderDays();
+            };
+          }
+          body.appendChild(row);
+        });
+
+        card.appendChild(body);
+        container.appendChild(card);
+      }
+    }
+
+    function expandAll() {
+      const d1 = activeWeek * 7;
+      const d2 = Math.min(d1 + 7, 100);
+      for (let di = d1; di < d2; di++) openDays.add(di);
+      renderDays();
+    }
+    function collapseAll() {
+      openDays.clear();
+      renderDays();
+    }
+    function jumpToToday() {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const start = new Date(START_DATE); start.setHours(0, 0, 0, 0);
+      const diff = Math.round((today - start) / 86400000);
+      if (diff >= 0 && diff < 100) {
+        activeWeek = Math.floor(diff / 7);
+        openDays.add(diff);
+        renderWeekTabs();
+        renderWeekSummary();
+        renderDays();
+        setTimeout(() => {
+          const el = document.getElementById('day-card-' + diff);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+    function resetAll() {
+      if (!confirm('Reset ALL progress? This cannot be undone.')) return;
+      days.forEach(d => d.sessions.forEach(s => s.checked = false));
+      openDays.clear();
+      save();
+      renderStats();
+      renderWeekSummary();
+      renderDays();
+    }
+
+    // Confetti
+    function spawnConfetti(el) {
+      const rect = el.getBoundingClientRect();
+      const colors = ['#e0689a', '#f09bb9', '#5b9bd5', '#85bce8', '#d4b8e0', '#f8c8d8', '#bcd9f5', '#c76bab'];
+      for (let i = 0; i < 8; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.cssText = `
+      left: ${rect.left + Math.random() * rect.width}px;
+      top: ${rect.top}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      animation-delay: ${Math.random() * 0.3}s;
+    `;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 1500);
+      }
+    }
+
+    // ──────────────────────────────────────────────
+    // THEME TOGGLE
+    // ──────────────────────────────────────────────
+    function applyTheme(dark) {
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('toggle-icon').textContent = '🌸';
+        document.getElementById('toggle-label').textContent = 'Pookie Mode';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('toggle-icon').textContent = '🌙';
+        document.getElementById('toggle-label').textContent = 'Dark Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = !isDark;
+      localStorage.setItem('studyTheme', next ? 'dark' : 'light');
+      applyTheme(next);
+    }
+
+    // ──────────────────────────────────────────────
+    // INIT
+    // ──────────────────────────────────────────────
+    // Restore saved theme
+    const savedTheme = localStorage.getItem('studyTheme');
+    applyTheme(savedTheme === 'dark');
+
+    load();
+    renderWeekTabs();
+    renderWeekSummary();
+    renderStats();
+    // Auto-open today's day
+    const todayDiff = Math.round((new Date().setHours(0, 0, 0, 0) - new Date(START_DATE).setHours(0, 0, 0, 0)) / 86400000);
+    if (todayDiff >= 0 && todayDiff < 100) {
+      activeWeek = Math.floor(todayDiff / 7);
+      openDays.add(todayDiff);
+      document.querySelector(`.week-tab:nth-child(${activeWeek + 1})`)?.classList.add('active');
+      renderWeekTabs();
+      renderWeekSummary();
+    }
+    renderDays();
+  </script>
+</body>
+
+</html>
