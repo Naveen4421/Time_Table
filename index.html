@@ -1452,6 +1452,7 @@
       }
     }
   </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -1605,6 +1606,12 @@
         <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
       </label>
       <button class="btn btn-danger" onclick="resetAll()">🗑 Reset All</button>
+      <button class="btn btn-primary" id="notify-btn" onclick="requestNotificationPermission()">🔔 Enable Alerts</button>
+      <button class="btn btn-outline" onclick="testNotificationSystem()">🧪 Test Alert</button>
+      <div style="display:flex; align-items:center; gap:10px; background:var(--bg-glass); padding:5px 15px; border-radius:12px; border:1.5px solid var(--border-light);">
+        <span style="font-size:0.8rem; font-weight:800; color:var(--text-secondary);">📧 Alert Email:</span>
+        <input type="email" id="alert-email" placeholder="your@email.com" style="border:none; background:transparent; font-family:'Nunito'; font-size:0.8rem; outline:none; color:var(--text-primary); width:150px;">
+      </div>
     </div>
 
     <!-- WEEK TABS -->
@@ -1642,7 +1649,39 @@
   </div>
 
   <script>
+    
     // ──────────────────────────────────────────────
+    // EMAIL NOTIFICATIONS (EmailJS)
+    // ──────────────────────────────────────────────
+    (function() {
+        // REPLACE 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init("bwtmz4IBfxHEZ8SFr");
+        }
+    })();
+
+    function sendEmailNotification(subject, topic, timeRemaining) {
+        const userEmail = document.getElementById('alert-email').value;
+        if (!userEmail || typeof emailjs === 'undefined') return;
+
+        const templateParams = {
+            to_email: userEmail,
+            subject_name: subject,
+            topic_name: topic,
+            time_left: timeRemaining,
+            message: `Your ${subject} session is ending in ${timeRemaining} minutes. Topic covered: ${topic}`
+        };
+
+        // REPLACE 'service_chqqpz3' and 'template_a2awvbf' with yours
+        emailjs.send('service_chqqpz3', 'template_a2awvbf', templateParams)
+            .then(function(response) {
+               console.log('Email sent successfully!', response.status, response.text);
+            }, function(error) {
+               console.log('Email failed...', error);
+            });
+    }
+
+// ──────────────────────────────────────────────
     // DATA
     // ──────────────────────────────────────────────
 
@@ -2358,6 +2397,80 @@
       URL.revokeObjectURL(url);
       
       alert("Calendar file downloaded! Click it to instantly add all your study tasks for this day (with 30-min reminders) into Google Calendar!");
+    }
+
+    // ──────────────────────────────────────────────
+    // BROWSER NOTIFICATIONS
+    // ──────────────────────────────────────────────
+    let notifiedSessions = new Set();
+
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notifications.");
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          alert("Notifications enabled! We'll remind you 5 minutes before each session ends.");
+          const btn = document.getElementById('notify-btn');
+          if (btn) btn.style.display = 'none';
+          checkNotifications();
+        }
+      });
+    }
+
+    function checkNotifications() {
+      if (Notification.permission !== "granted") return;
+
+      const now = new Date();
+      const todayIdx = days.findIndex(d => d.date.toDateString() === now.toDateString());
+      if (todayIdx === -1) return;
+
+      const today = days[todayIdx];
+      
+      today.sessions.forEach((sess, si) => {
+        if (sess.sub === 'Break') return;
+        
+        const endTime = parseTimeStr(now, sess.end);
+        const timeDiff = (endTime - now) / (1000 * 60);
+
+        // Notify at 15 and 5 minutes remaining
+        const remaining = Math.round(timeDiff);
+        const intervals = [15, 5];
+        
+        intervals.forEach(interval => {
+            const sessionKey = `${todayIdx}-${si}-${interval}`;
+            if (remaining === interval && !notifiedSessions.has(sessionKey)) {
+              sendEmailNotification(sess.sub, sess.topic, interval);
+              new Notification(`${interval} Minutes Remaining!`, {
+                body: `Your ${sess.sub} session ends in ${interval} minutes. Finish: ${sess.topic}`,
+                icon: "https://cdn-icons-png.flaticon.com/512/3208/3208615.png"
+              });
+              notifiedSessions.add(sessionKey);
+            }
+        });
+      });
+    }
+
+    // Check every 60 seconds
+    setInterval(checkNotifications, 60000);
+
+
+    function testNotificationSystem() {
+        if (!document.getElementById('alert-email').value) {
+            alert("Please enter an email first!");
+            return;
+        }
+        
+        // Test Pop-up
+        new Notification("Test Success!", {
+            body: "If you see this, your browser pop-ups are working! Now check your email.",
+            icon: "https://cdn-icons-png.flaticon.com/512/3208/3208615.png"
+        });
+
+        // Test Email
+        sendEmailNotification("TEST SUBJECT", "Testing Topic", 99);
+        alert("Test notification triggered! Check your browser corner and your email inbox.");
     }
   </script>
 </body>
