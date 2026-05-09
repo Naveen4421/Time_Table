@@ -2791,10 +2791,23 @@
       }
     });
 
+    
     function logout() {
-      auth.signOut().then(() => {
-        location.reload();
-      });
+      console.log("Force Logout Executing...");
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+          window.location.href = 'index.html';
+        }).catch(() => {
+          window.location.href = 'index.html';
+        });
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+    );
     }
     
     // ──────────────────────────────────────────────
@@ -2860,10 +2873,23 @@
       }
     });
 
+    
     function logout() {
-      localStorage.removeItem('study_current_user');
-      location.reload();
+      console.log("Force Logout Executing...");
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+          window.location.href = 'index.html';
+        }).catch(() => {
+          window.location.href = 'index.html';
+        });
+      } else {
+        window.location.href = 'index.html';
+      }
     }
+    
     
     function toggleDropdown(event) {
       event.stopPropagation();
@@ -2907,12 +2933,23 @@
     }
 
     // Fix Logout to be more aggressive
+    
     function logout() {
-      console.log("Logout triggered");
+      console.log("Force Logout Executing...");
+      localStorage.clear();
+      sessionStorage.clear();
+      
       if (window.firebase && firebase.auth) {
         firebase.auth().signOut().then(() => {
-          window.location.reload(true);
-        }).catch(err => {
+          window.location.href = 'index.html';
+        }).catch(() => {
+          window.location.href = 'index.html';
+        });
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+    ).catch(err => {
           console.error(err);
           localStorage.removeItem('study_current_user');
           window.location.reload(true);
