@@ -2695,23 +2695,12 @@
         alert("Test notification triggered! Check your browser corner and your email inbox.");
     }
 
-    
     function logout() {
-      console.log("Force Logout Executing...");
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      if (window.firebase && firebase.auth) {
-        firebase.auth().signOut().then(() => {
-          window.location.href = 'index.html';
-        }).catch(() => {
-          window.location.href = 'index.html';
+      // For Firebase
+      if (typeof auth !== 'undefined') {
+        auth.signOut().then(() => {
+          location.reload();
         });
-      } else {
-        window.location.href = 'index.html';
-      }
-    }
-    );
       } else {
         // For localStorage backup
         localStorage.removeItem('study_current_user');
@@ -2812,23 +2801,12 @@
     }
 
     // Fix Logout to be more aggressive
-    
     function logout() {
-      console.log("Force Logout Executing...");
-      localStorage.clear();
-      sessionStorage.clear();
-      
+      console.log("Logout triggered");
       if (window.firebase && firebase.auth) {
         firebase.auth().signOut().then(() => {
-          window.location.href = 'index.html';
-        }).catch(() => {
-          window.location.href = 'index.html';
-        });
-      } else {
-        window.location.href = 'index.html';
-      }
-    }
-    ).catch(err => {
+          window.location.reload(true);
+        }).catch(err => {
           console.error(err);
           localStorage.removeItem('study_current_user');
           window.location.reload(true);
