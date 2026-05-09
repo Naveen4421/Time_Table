@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MISSION 100: STUDY PLAN!! | 6 PM – 11 PM</title>
+  <title>YEARLY STUDY PLAN!! | 6 PM – 11 PM</title>
   <meta name="description"
-    content="Interactive 100-day study timetable for DSA, CN, OS, Aptitude, and Project from 6 PM to 11 PM with checklist and progress tracking." />
+    content="Interactive yearly study timetable for DSA, CN, OS, Aptitude, and Project from 6 PM to 11 PM with checklist and progress tracking." />
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
@@ -1028,10 +1028,7 @@
 
     /* ── THEME TOGGLE BUTTON ── */
     #theme-toggle {
-      position: fixed;
-      top: 18px;
-      right: 22px;
-      z-index: 9999;
+
       display: flex;
       align-items: center;
       gap: 7px;
@@ -1225,11 +1222,233 @@
         gap: 10px;
       }
 
-      #theme-toggle {
+      
+    }
+
+    /* ── JOURNEY MAP ── */
+    .journey-card-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      margin-top: 20px;
+    }
+    .cal-node {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      border: 1px solid var(--border-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .cal-node:hover {
+      transform: scale(1.15);
+      border-color: var(--pink-mid);
+      box-shadow: 0 4px 12px var(--glow-pink);
+      z-index: 2;
+    }
+    .cal-node.completed {
+      background: linear-gradient(135deg, var(--accent-done), #54b489);
+      color: #fff;
+      border-color: transparent;
+    }
+    .cal-node.today {
+      border-color: var(--pink-deep);
+      background: var(--pink-pale);
+      color: var(--pink-deep);
+      box-shadow: 0 0 0 2px rgba(224, 104, 154, 0.2);
+    }
+    [data-theme="dark"] .cal-node {
+      border-color: #444;
+      background: #141414;
+      color: #aaa;
+    }
+    [data-theme="dark"] .cal-node.completed {
+      background: linear-gradient(135deg, #6abf8a, #4a996b);
+      color: #000;
+    }
+    [data-theme="dark"] .cal-node.today {
+      border-color: #fff;
+      background: #333;
+      color: #fff;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+  
+    .daily-note {
+      width: 100%;
+      min-height: 60px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-light);
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-top: 5px;
+    }
+    .daily-note:focus {
+      outline: none;
+      border-color: var(--pink-mid);
+      box-shadow: 0 0 10px var(--glow-pink);
+    }
+    [data-theme="dark"] .daily-note {
+      border-color: #333;
+      background: rgba(22, 22, 22, 0.5);
+      color: #eee;
+    }
+    [data-theme="dark"] .daily-note:focus {
+      border-color: #666;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+  
+    .top-controls {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      z-index: 9999;
+      display: flex;
+      gap: 10px;
+    }
+    
+    #profile-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(224, 104, 154, 0.35);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #7a5271;
+      box-shadow: 0 4px 18px rgba(224, 104, 154, 0.18);
+      transition: all 0.3s;
+    }
+    #profile-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 24px rgba(224, 104, 154, 0.28);
+    }
+    [data-theme="dark"] #profile-btn {
+      border-color: rgba(200, 200, 200, 0.2);
+      background: rgba(28, 28, 28, 0.85);
+      color: #c8c8c8;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+    [data-theme="dark"] #profile-btn:hover {
+      box-shadow: 0 7px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .profile-modal {
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      width: 90%;
+      max-width: 450px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .modal-overlay.active .profile-modal {
+      transform: translateY(0) scale(1);
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: transparent; border: none;
+      font-size: 1.5rem; color: var(--text-muted);
+      cursor: pointer; transition: color 0.2s;
+    }
+    .close-modal:hover { color: var(--pink-deep); }
+    
+    .profile-header {
+      display: flex; flex-direction: column; align-items: center;
+      margin-bottom: 25px;
+    }
+    .profile-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-mid), var(--blue-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; border: 4px solid var(--bg-card);
+      box-shadow: 0 4px 15px var(--glow-pink);
+      margin-bottom: 12px;
+    }
+    .profile-name {
+      font-size: 1.4rem; font-weight: 900; color: var(--text-primary);
+    }
+    .profile-title {
+      font-size: 0.9rem; font-weight: 700; color: var(--text-secondary);
+      background: var(--bg-glass); padding: 4px 12px; border-radius: 50px; margin-top: 5px;
+    }
+    
+    .perf-chart {
+      display: flex; justify-content: space-around; align-items: flex-end;
+      height: 140px; background: var(--bg-card);
+      border: 1.5px solid var(--border-blue); border-radius: 16px;
+      padding: 20px 10px 10px; margin-top: 15px;
+    }
+    .perf-col {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .perf-bar-bg {
+      width: 24px; height: 90px; background: var(--pink-blush);
+      border-radius: 12px; display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .perf-bar-fill {
+      width: 100%; background: linear-gradient(0deg, var(--pink-deep), var(--blue-mid));
+      border-radius: 12px; transition: height 0.8s ease-out;
+    }
+    .perf-label {
+      font-size: 0.7rem; font-weight: 800; color: var(--text-muted);
+    }
+    .perf-pct {
+      font-size: 0.65rem; font-weight: 800; color: var(--text-primary);
+    }
+    
+    @media (max-width: 600px) {
+      .top-controls {
         top: 12px;
         right: 12px;
+      }
+      #theme-toggle {
         padding: 7px 12px;
         font-size: 0.73rem;
+        position: static !important;
+      }
+      #profile-btn {
+        width: 36px; height: 36px; font-size: 1rem;
       }
     }
   </style>
@@ -1237,17 +1456,39 @@
 
 <body>
 
-  <!-- 🌙 THEME TOGGLE -->
-  <button id="theme-toggle" onclick="toggleTheme()" title="Switch theme">
-    <span class="toggle-icon" id="toggle-icon">🌙</span>
-    <span id="toggle-label">Dark Mode</span>
-  </button>
+    <!-- TOP CONTROLS -->
+  <div class="top-controls">
+    <button id="theme-toggle" onclick="toggleTheme()" title="Switch theme" style="border: 1.5px solid rgba(224, 104, 154, 0.35); background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); cursor: pointer; border-radius: 50px; font-weight: 800; color: #7a5271; padding: 8px 16px; display: flex; align-items: center; gap: 7px;">
+      <span class="toggle-icon" id="toggle-icon">🌙</span>
+      <span id="toggle-label">Dark Mode</span>
+    </button>
+    <button id="profile-btn" onclick="toggleProfileModal()" title="Profile & Stats">
+      ⋮
+    </button>
+  </div>
+
+  <!-- PROFILE MODAL -->
+  <div class="modal-overlay" id="profileModal" onclick="if(event.target===this) toggleProfileModal()">
+    <div class="profile-modal">
+      <button class="close-modal" onclick="toggleProfileModal()">×</button>
+      <div class="profile-header">
+        <div class="profile-avatar">👨‍💻</div>
+        <div class="profile-name">Dedicated Learner</div>
+        <div class="profile-title">🎯 Master of the 365-Day Journey</div>
+      </div>
+      
+      <h3 style="font-size:0.95rem; font-weight:800; color:var(--text-secondary); margin-bottom: 5px;">Performance by Topic</h3>
+      <div class="perf-chart" id="perfChart">
+        <!-- Bars injected here -->
+      </div>
+    </div>
+  </div>
   <div class="container">
 
     <!-- HEADER -->
     <header class="header">
-      <div class="header-badge">🎯 Mission 100</div>
-      <h1>MISSION 100: STUDY PLAN!!</h1>
+      <div class="header-badge">🎯 Yearly Plan</div>
+      <h1>YEARLY STUDY PLAN!!</h1>
       <p>6:00 PM – 11:00 PM · DSA · CN · OS · Aptitude · Project</p>
     </header>
 
@@ -1276,7 +1517,7 @@
       <h2>🎯 Overall Progress</h2>
       <div class="overall-nums">
         <div id="overall-pct-big">0%</div>
-        <div class="completed-tasks-label" id="overall-fraction">0 / 500 sessions completed</div>
+        <div class="completed-tasks-label" id="overall-fraction">0 sessions completed</div>
       </div>
       <div class="progress-bar-track"
         style="height:14px;border-radius:99px;overflow:hidden;background:var(--pink-blush);">
@@ -1323,6 +1564,14 @@
       </div>
     </div>
 
+    <!-- JOURNEY MAP -->
+    <div class="overall-progress-card" style="padding-bottom: 10px;">
+      <h2>🗺️ Yearly Tracker</h2>
+      <div class="journey-card-wrapper">
+        <div id="journeyGrid"></div>
+      </div>
+    </div>
+
     <!-- LEGEND -->
     <div class="legend">
       <div class="legend-item">
@@ -1350,6 +1599,11 @@
       <button class="btn btn-outline" onclick="expandAll()">⬇ Expand All Days</button>
       <button class="btn btn-outline" onclick="collapseAll()">⬆ Collapse All</button>
       <button class="btn btn-outline" onclick="jumpToToday()">📍 Jump to Today</button>
+      <button class="btn btn-outline" onclick="exportData()">💾 Export Data</button>
+      <label class="btn btn-outline" style="cursor:pointer;">
+        📂 Import Data
+        <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+      </label>
       <button class="btn btn-danger" onclick="resetAll()">🗑 Reset All</button>
     </div>
 
@@ -1383,7 +1637,7 @@
     <!-- DAYS GRID -->
     <div class="days-grid" id="daysGrid"></div>
 
-    <div class="footer">Built with ❤️ for your 100-day journey · Keep going, Day <span id="footerDay">1</span> at a
+    <div class="footer">Built with ❤️ for your year-long journey · Keep going, Day <span id="footerDay">1</span> at a
       time!</div>
   </div>
 
@@ -1470,11 +1724,14 @@
     const LS_KEY = 'studyTimetable_v3';
 
     // Generate 100 days
-    const START_DATE = new Date(2026, 3, 12); // Apr 12 2026
+    const START_DATE = new Date(new Date().getFullYear(), 0, 1);
 
     function generateDays() {
       const days = [];
-      for (let d = 1; d <= 100; d++) {
+      const currentYear = START_DATE.getFullYear();
+      const isLeapYear = (currentYear % 4 === 0 && currentYear % 100 !== 0) || (currentYear % 400 === 0);
+      const totalDays = isLeapYear ? 366 : 365;
+      for (let d = 1; d <= totalDays; d++) {
         const pattern = PATTERNS[(d - 1) % PATTERNS.length];
         const topicIdx = (d - 1) % 20;
         const sessions = pattern.map(s => ({
@@ -1498,7 +1755,10 @@
     // PERSISTENCE
     // ──────────────────────────────────────────────
     function save() {
-      const data = days.map(d => d.sessions.map(s => s.checked));
+      const data = days.map(d => ({
+        checks: d.sessions.map(s => s.checked),
+        note: d.note || ""
+      }));
       localStorage.setItem(LS_KEY, JSON.stringify(data));
     }
 
@@ -1507,13 +1767,62 @@
       if (!raw) return;
       try {
         const data = JSON.parse(raw);
-        data.forEach((daySessions, di) => {
+        data.forEach((dayData, di) => {
           if (!days[di]) return;
-          daySessions.forEach((checked, si) => {
-            if (days[di].sessions[si]) days[di].sessions[si].checked = !!checked;
-          });
+          if (Array.isArray(dayData)) {
+            dayData.forEach((checked, si) => {
+              if (days[di].sessions[si]) days[di].sessions[si].checked = !!checked;
+            });
+            days[di].note = "";
+          } else {
+            if(dayData.checks) {
+              dayData.checks.forEach((checked, si) => {
+                if (days[di].sessions[si]) days[di].sessions[si].checked = !!checked;
+              });
+            }
+            days[di].note = dayData.note || "";
+          }
         });
       } catch (e) { }
+    }
+
+    function exportData() {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw || raw === "[]") {
+        alert("No data to export!");
+        return;
+      }
+      const blob = new Blob([raw], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "study_plan_backup.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const content = e.target.result;
+          JSON.parse(content); // Validate JSON format
+          localStorage.setItem(LS_KEY, content);
+          load();
+          renderStats();
+          renderWeekSummary();
+          renderDays();
+          alert("Data imported successfully! 🎉");
+        } catch (err) {
+          alert("Invalid backup file! Please ensure it's a valid JSON backup.");
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = ''; // Reset input so the same file can be imported again if needed
     }
 
     // ──────────────────────────────────────────────
@@ -1525,7 +1834,7 @@
 
     function getWeekLabel(weekIdx) {
       const d1 = weekIdx * 7 + 1;
-      const d2 = Math.min(d1 + 6, 100);
+      const d2 = Math.min(d1 + 6, days.length);
       return `Week ${weekIdx + 1} (Days ${d1}–${d2})`;
     }
 
@@ -1581,7 +1890,7 @@
 
     function getWeekStats(weekIdx) {
       const d1 = weekIdx * 7;
-      const d2 = Math.min(d1 + 7, 100);
+      const d2 = Math.min(d1 + 7, days.length);
       let total = 0, done = 0;
       for (let di = d1; di < d2; di++) {
         const ss = studySessions(days[di].sessions);
@@ -1599,7 +1908,7 @@
     function renderWeekTabs() {
       const container = document.getElementById('weekTabs');
       container.innerHTML = '';
-      for (let w = 0; w < 15; w++) {
+      const totalWeeks = Math.ceil(days.length / 7); for (let w = 0; w < totalWeeks; w++) {
         const tab = document.createElement('button');
         tab.className = 'week-tab' + (w === activeWeek ? ' active' : '');
         tab.textContent = `W${w + 1}`;
@@ -1636,6 +1945,8 @@
         document.getElementById('bar-' + sub).style.width = spct + '%';
         document.getElementById('pct-' + sub).textContent = spct + '%';
       });
+
+      renderJourneyMap();
     }
 
     const openDays = new Set();
@@ -1644,7 +1955,7 @@
       const container = document.getElementById('daysGrid');
       container.innerHTML = '';
       const d1 = activeWeek * 7;
-      const d2 = Math.min(d1 + 7, 100);
+      const d2 = Math.min(d1 + 7, days.length);
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -1709,6 +2020,54 @@
           body.appendChild(row);
         });
 
+        const notesDiv = document.createElement('div');
+        notesDiv.style.marginTop = '15px';
+        notesDiv.style.borderTop = '1.5px dashed var(--border-light)';
+        notesDiv.style.paddingTop = '15px';
+        
+        const noteLabel = document.createElement('div');
+        noteLabel.textContent = "📝 Daily Notes & Feedback";
+        noteLabel.style.fontSize = '0.8rem';
+        noteLabel.style.fontWeight = '800';
+        noteLabel.style.color = 'var(--text-secondary)';
+        noteLabel.style.marginBottom = '6px';
+        
+        const noteArea = document.createElement('textarea');
+        noteArea.className = 'daily-note';
+        noteArea.placeholder = "Write what you learned today, what to revise, or how you felt...";
+        noteArea.value = day.note || "";
+        noteArea.oninput = (e) => {
+          day.note = e.target.value;
+          save();
+        };
+        
+        notesDiv.appendChild(noteLabel);
+        notesDiv.appendChild(noteArea);
+        body.appendChild(notesDiv);
+        const calBtnDiv = document.createElement('div');
+        calBtnDiv.style.marginTop = '15px';
+        calBtnDiv.style.display = 'flex';
+        calBtnDiv.style.justifyContent = 'flex-end';
+        
+        const calBtn = document.createElement('button');
+        calBtn.innerHTML = '📅 Add to Google Calendar';
+        calBtn.style.background = 'var(--pink-pale)';
+        calBtn.style.color = 'var(--pink-deep)';
+        calBtn.style.border = '1px solid var(--pink-mid)';
+        calBtn.style.padding = '8px 14px';
+        calBtn.style.borderRadius = '50px';
+        calBtn.style.fontSize = '0.75rem';
+        calBtn.style.fontWeight = 'bold';
+        calBtn.style.cursor = 'pointer';
+        calBtn.style.boxShadow = '0 2px 10px rgba(224, 104, 154, 0.15)';
+        calBtn.style.transition = 'all 0.2s';
+        calBtn.onmouseover = () => calBtn.style.transform = 'scale(1.05)';
+        calBtn.onmouseout = () => calBtn.style.transform = 'scale(1)';
+        
+        calBtn.onclick = () => exportDayToICS(di);
+        
+        calBtnDiv.appendChild(calBtn);
+        body.appendChild(calBtnDiv);
         card.appendChild(body);
         container.appendChild(card);
       }
@@ -1716,7 +2075,7 @@
 
     function expandAll() {
       const d1 = activeWeek * 7;
-      const d2 = Math.min(d1 + 7, 100);
+      const d2 = Math.min(d1 + 7, days.length);
       for (let di = d1; di < d2; di++) openDays.add(di);
       renderDays();
     }
@@ -1724,20 +2083,107 @@
       openDays.clear();
       renderDays();
     }
+    function renderJourneyMap() {
+      const container = document.getElementById('journeyGrid');
+      if (!container) return;
+      container.innerHTML = '';
+      
+      const yearStr = START_DATE.getFullYear();
+      container.style.display = 'grid';
+      container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(220px, 1fr))';
+      container.style.gap = '20px';
+      container.style.width = '100%';
+      container.style.height = 'auto';
+      container.style.position = 'relative';
+      
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      
+      let dayIndex = 0;
+      
+      for (let m = 0; m < 12; m++) {
+        const monthDiv = document.createElement('div');
+        monthDiv.className = 'month-block';
+        
+        const title = document.createElement('h3');
+        title.textContent = monthNames[m];
+        title.style.marginBottom = '10px';
+        title.style.fontSize = '0.9rem';
+        title.style.color = 'var(--text-secondary)';
+        title.style.textAlign = 'center';
+        monthDiv.appendChild(title);
+        
+        const grid = document.createElement('div');
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+        grid.style.gap = '4px';
+        
+        ['S','M','T','W','T','F','S'].forEach(dw => {
+          const w = document.createElement('div');
+          w.textContent = dw;
+          w.style.fontSize = '0.65rem';
+          w.style.color = 'var(--text-muted)';
+          w.style.textAlign = 'center';
+          grid.appendChild(w);
+        });
+        
+        const firstDayOfMonth = new Date(yearStr, m, 1).getDay();
+        for(let i = 0; i < firstDayOfMonth; i++) {
+          grid.appendChild(document.createElement('div'));
+        }
+        
+        const daysInMonth = new Date(yearStr, m + 1, 0).getDate();
+        for(let d = 1; d <= daysInMonth; d++) {
+          if (dayIndex >= days.length) break;
+          const currentIdx = dayIndex;
+          const day = days[currentIdx];
+          
+          const ss = studySessions(day.sessions);
+          const done = ss.filter(s => s.checked).length;
+          const pct = ss.length > 0 ? Math.round(done / ss.length * 100) : 0;
+          const isComplete = pct === 100 && ss.length > 0;
+          
+          const today = new Date(); today.setHours(0, 0, 0, 0);
+          const dDate = new Date(day.date); dDate.setHours(0, 0, 0, 0);
+          const isToday = dDate.getTime() === today.getTime();
+          
+          const cell = document.createElement('div');
+          cell.className = 'cal-node' + (isComplete ? ' completed' : '') + (isToday ? ' today' : '');
+          cell.textContent = d;
+          
+          cell.onclick = () => jumpToDay(currentIdx);
+          
+          grid.appendChild(cell);
+          dayIndex++;
+        }
+        
+        monthDiv.appendChild(grid);
+        container.appendChild(monthDiv);
+      }
+    }
+
+    function jumpToDay(dayIdx) {
+      activeWeek = Math.floor(dayIdx / 7);
+      openDays.add(dayIdx);
+      renderWeekTabs();
+      renderWeekSummary();
+      renderDays();
+      setTimeout(() => {
+        const el = document.getElementById('day-card-' + dayIdx);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.transition = 'box-shadow 0.3s';
+          el.style.boxShadow = '0 0 20px var(--pink-deep)';
+          setTimeout(() => el.style.boxShadow = '', 1500);
+        }
+      }, 100);
+    }
+
     function jumpToToday() {
       const today = new Date(); today.setHours(0, 0, 0, 0);
       const start = new Date(START_DATE); start.setHours(0, 0, 0, 0);
       const diff = Math.round((today - start) / 86400000);
-      if (diff >= 0 && diff < 100) {
-        activeWeek = Math.floor(diff / 7);
-        openDays.add(diff);
-        renderWeekTabs();
-        renderWeekSummary();
-        renderDays();
-        setTimeout(() => {
-          const el = document.getElementById('day-card-' + diff);
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+      if (diff >= 0 && diff < days.length) {
+        jumpToDay(diff);
       }
     }
     function resetAll() {
@@ -1804,7 +2250,7 @@
     renderStats();
     // Auto-open today's day
     const todayDiff = Math.round((new Date().setHours(0, 0, 0, 0) - new Date(START_DATE).setHours(0, 0, 0, 0)) / 86400000);
-    if (todayDiff >= 0 && todayDiff < 100) {
+    if (todayDiff >= 0 && todayDiff < days.length) {
       activeWeek = Math.floor(todayDiff / 7);
       openDays.add(todayDiff);
       document.querySelector(`.week-tab:nth-child(${activeWeek + 1})`)?.classList.add('active');
@@ -1812,6 +2258,107 @@
       renderWeekSummary();
     }
     renderDays();
+  
+    function toggleProfileModal() {
+      const modal = document.getElementById('profileModal');
+      const isActive = modal.classList.contains('active');
+      
+      if (!isActive) {
+        const s = getStats();
+        const chart = document.getElementById('perfChart');
+        chart.innerHTML = '';
+        
+        SUBJECTS.forEach(sub => {
+          const spct = s.subTotal[sub] > 0 ? Math.round((s.subChecked[sub] || 0) / s.subTotal[sub] * 100) : 0;
+          
+          let colorClass = 'var(--pink-deep)';
+          if(sub==='CN') colorClass = 'var(--cn)';
+          else if(sub==='OS') colorClass = 'var(--os)';
+          else if(sub==='Aptitude') colorClass = 'var(--apt)';
+          else if(sub==='Project') colorClass = 'var(--proj)';
+
+          chart.innerHTML += `
+            <div class="perf-col">
+              <span class="perf-pct">${spct}%</span>
+              <div class="perf-bar-bg">
+                <div class="perf-bar-fill" style="height: 0%; background: ${colorClass}"></div>
+              </div>
+              <span class="perf-label">${sub}</span>
+            </div>
+          `;
+        });
+        
+        setTimeout(() => {
+          const fills = chart.querySelectorAll('.perf-bar-fill');
+          SUBJECTS.forEach((sub, i) => {
+            const spct = s.subTotal[sub] > 0 ? Math.round((s.subChecked[sub] || 0) / s.subTotal[sub] * 100) : 0;
+            if(fills[i]) fills[i].style.height = spct + '%';
+          });
+        }, 50);
+      }
+      
+      modal.classList.toggle('active');
+    }
+  
+    function parseTimeStr(baseDate, timeStr) {
+      const parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      if (!parts) return new Date(baseDate);
+      let hours = parseInt(parts[1], 10);
+      const mins = parseInt(parts[2], 10);
+      const ampm = parts[3].toUpperCase();
+      if (ampm === 'PM' && hours < 12) hours += 12;
+      if (ampm === 'AM' && hours === 12) hours = 0;
+      const d = new Date(baseDate);
+      d.setHours(hours, mins, 0, 0);
+      return d;
+    }
+
+    function formatDateICS(date) {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    }
+
+    function exportDayToICS(dayIndex) {
+      const day = days[dayIndex];
+      let icsData = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TimeTable//EN\r\n";
+
+      day.sessions.forEach(sess => {
+         if (sess.sub === 'Break') return;
+         if (sess.checked) return; // Skip completed
+         
+         const startTime = parseTimeStr(day.date, sess.start);
+         const endTime = parseTimeStr(day.date, sess.end);
+
+         const dtstart = formatDateICS(startTime);
+         const dtend = formatDateICS(endTime);
+         
+         icsData += "BEGIN:VEVENT\r\n";
+         icsData += `UID:${dayIndex}-${sess.sub.replace(/\s/g, '')}-${Date.now()}@timetable\r\n`;
+         icsData += `DTSTAMP:${formatDateICS(new Date())}\r\n`;
+         icsData += `DTSTART:${dtstart}\r\n`;
+         icsData += `DTEND:${dtend}\r\n`;
+         icsData += `SUMMARY:${sess.sub} - Study Session\r\n`;
+         icsData += `DESCRIPTION:Topic to cover: ${sess.topic}. You got this!\r\n`;
+         
+         // 30-minute alarm reminder
+         icsData += "BEGIN:VALARM\r\nTRIGGER:-PT30M\r\nACTION:DISPLAY\r\nDESCRIPTION:Study Reminder\r\nEND:VALARM\r\n";
+         
+         icsData += "END:VEVENT\r\n";
+      });
+
+      icsData += "END:VCALENDAR\r\n";
+      
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Study_Day_${day.day}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert("Calendar file downloaded! Click it to instantly add all your study tasks for this day (with 30-min reminders) into Google Calendar!");
+    }
   </script>
 </body>
 
