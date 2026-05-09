@@ -2472,6 +2472,19 @@
         sendEmailNotification("TEST SUBJECT", "Testing Topic", 99);
         alert("Test notification triggered! Check your browser corner and your email inbox.");
     }
+
+    function logout() {
+      // For Firebase
+      if (typeof auth !== 'undefined') {
+        auth.signOut().then(() => {
+          location.reload();
+        });
+      } else {
+        // For localStorage backup
+        localStorage.removeItem('study_current_user');
+        location.reload();
+      }
+    }
   </script>
 </body>
 
