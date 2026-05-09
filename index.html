@@ -1655,31 +1655,9 @@
       <span class="toggle-icon" id="toggle-icon">🌙</span>
       <span id="toggle-label">Dark Mode</span>
     </button>
-    
-    <div class="profile-container" id="profile-dropdown-container">
-      <div class="profile-trigger" onclick="toggleDropdown(event)">
-        <div class="profile-img">👤</div>
-        <div class="profile-name">Dedicated Learner</div>
-      </div>
-      <div class="dropdown-menu" id="profile-dropdown">
-        <div class="dropdown-item" onclick="toggleProfileModal()">
-          <span>👤</span> Profile & Bio
-        </div>
-        <div class="dropdown-item" onclick="alert('Daily tasks sync coming soon!')">
-          <span>📝</span> Edit Daily Tasks
-        </div>
-        <div class="dropdown-item" onclick="toggleProfileModal()">
-          <span>📊</span> Performance Stats
-        </div>
-        <div class="dropdown-item" onclick="resetAll()">
-          <span>🔄</span> Reset Progress
-        </div>
-        <div class="dropdown-item logout" onclick="logout()">
-          <span>🚪</span> Logout
-        </div>
-      </div>
-    </div>
-    
+    <button id="profile-btn" onclick="toggleProfileModal()" title="Profile & Stats">
+      ⋮
+    </button>
   </div>
 
   <!-- PROFILE MODAL -->
