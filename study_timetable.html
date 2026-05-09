@@ -1642,6 +1642,14 @@
       background: rgba(255, 126, 126, 0.1);
       color: #ff5e5e;
     }
+    
+    .editing-active .session-desc {
+      background: rgba(224, 104, 154, 0.1);
+      border-radius: 8px;
+      padding: 5px;
+      cursor: text;
+      border: 1px dashed var(--pink-deep);
+    }
     </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
@@ -1687,24 +1695,24 @@
     
     <div class="profile-container" id="profile-dropdown-container">
       <div class="profile-trigger" onclick="toggleDropdown(event)">
-        <div class="profile-img">👤</div>
+        <div class="profile-img">P</div>
         <div class="profile-name">Dedicated Learner</div>
       </div>
       <div class="dropdown-menu" id="profile-dropdown">
         <div class="dropdown-item" onclick="toggleProfileModal()">
-          <span>👤</span> Profile & Bio
+          Profile & Bio
         </div>
-        <div class="dropdown-item" onclick="alert('Daily tasks sync coming soon!')">
-          <span>📝</span> Edit Daily Tasks
+        <div class="dropdown-item" onclick="editTasks()">
+          Edit Daily Tasks
         </div>
         <div class="dropdown-item" onclick="toggleProfileModal()">
-          <span>📊</span> Performance Stats
+          Performance Stats
         </div>
         <div class="dropdown-item" onclick="resetAll()">
-          <span>🔄</span> Reset Progress
+          Reset Progress
         </div>
         <div class="dropdown-item logout" onclick="logout()">
-          <span>🚪</span> Logout
+          Logout
         </div>
       </div>
     </div>
@@ -2868,6 +2876,52 @@
         dropdown.classList.remove('show');
       }
     });
+    
+    let editMode = false;
+    function editTasks() {
+      editMode = !editMode;
+      if (editMode) {
+        document.body.classList.add('editing-active');
+        document.querySelectorAll('.session-desc').forEach(el => {
+          el.contentEditable = true;
+        });
+        alert("Edit Mode ON: You can now click any task text to change it!");
+      } else {
+        document.body.classList.remove('editing-active');
+        document.querySelectorAll('.session-desc').forEach(el => {
+          el.contentEditable = false;
+          // Save custom names
+          const dayId = el.closest('.day-card').dataset.day;
+          const sessionId = el.closest('.session-row').dataset.session;
+          saveCustomTask(dayId, sessionId, el.innerText);
+        });
+        alert("Changes Saved!");
+      }
+    }
+
+    function saveCustomTask(day, session, text) {
+      let custom = JSON.parse(localStorage.getItem('custom_study_tasks') || '{}');
+      if (!custom[day]) custom[day] = {};
+      custom[day][session] = text;
+      localStorage.setItem('custom_study_tasks', JSON.stringify(custom));
+    }
+
+    // Fix Logout to be more aggressive
+    function logout() {
+      console.log("Logout triggered");
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+          window.location.reload(true);
+        }).catch(err => {
+          console.error(err);
+          localStorage.removeItem('study_current_user');
+          window.location.reload(true);
+        });
+      } else {
+        localStorage.removeItem('study_current_user');
+        window.location.reload(true);
+      }
+    }
       </script>
 </body>
 
